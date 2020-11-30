@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "j0rd@n12345",
+  password: "",
   database: "employee_DB",
 });
 
@@ -97,29 +97,29 @@ function init() {
   });
 
   // Get employee IDs and names
-  connection.query(sqlQueries.utilGetEmployeeIdsNames(), function (
-    err,
-    results
-  ) {
-    if (err) throw err;
-    employeeList.push("None");
-    for (let i = 0; i < results.length; i++) {
-      employeeList.push(results[i].first_name + " " + results[i].last_name);
+  connection.query(
+    sqlQueries.utilGetEmployeeIdsNames(),
+    function (err, results) {
+      if (err) throw err;
+      employeeList.push("None");
+      for (let i = 0; i < results.length; i++) {
+        employeeList.push(results[i].first_name + " " + results[i].last_name);
+      }
+      employeeListObject = results;
     }
-    employeeListObject = results;
-  });
+  );
 
   // Get Department IDs and names
-  connection.query(sqlQueries.utilGetDepartmentIdsNames(), function (
-    err,
-    results
-  ) {
-    if (err) throw err;
-    for (let i = 0; i < results.length; i++) {
-      departmentList.push(results[i].name);
+  connection.query(
+    sqlQueries.utilGetDepartmentIdsNames(),
+    function (err, results) {
+      if (err) throw err;
+      for (let i = 0; i < results.length; i++) {
+        departmentList.push(results[i].name);
+      }
+      departmentListObject = results;
     }
-    departmentListObject = results;
-  });
+  );
 
   start();
 }
@@ -196,25 +196,25 @@ function viewEmployees() {
 }
 
 function viewEmployeesByManager() {
-  connection.query(sqlQueries.viewEmployeesByManager(), function (
-    err,
-    results
-  ) {
-    if (err) throw err;
-    console.table(results);
-    start();
-  });
+  connection.query(
+    sqlQueries.viewEmployeesByManager(),
+    function (err, results) {
+      if (err) throw err;
+      console.table(results);
+      start();
+    }
+  );
 }
 
 function viewEmployeesByDepartment() {
-  connection.query(sqlQueries.viewEmployeesByDepartment(), function (
-    err,
-    results
-  ) {
-    if (err) throw err;
-    console.table(results);
-    start();
-  });
+  connection.query(
+    sqlQueries.viewEmployeesByDepartment(),
+    function (err, results) {
+      if (err) throw err;
+      console.table(results);
+      start();
+    }
+  );
 }
 
 function viewDepartments() {
@@ -541,13 +541,13 @@ function removeRole() {
       console.log(answer.removeRole);
       var removeRoleId = findRoleId(answer.removeRole, roleListObject).id;
       console.log(removeRoleId);
-      connection.query(sqlQueries.removeRole(removeRoleId), function (
-        err,
-        results
-      ) {
-        if (err) throw err;
-        console.log(answer.removeRole + " was removed from the database.");
-        init();
-      });
+      connection.query(
+        sqlQueries.removeRole(removeRoleId),
+        function (err, results) {
+          if (err) throw err;
+          console.log(answer.removeRole + " was removed from the database.");
+          init();
+        }
+      );
     });
 }

@@ -121,3 +121,7 @@ SELECT d.id, d.name
 USE employee_DB; SELECT * FROM role;
 USE employee_DB; SELECT * FROM employee;
 USE employee_DB; SELECT * FROM department;
+
+SELECT r.id, r.title
+            FROM role r
+            ORDER BY r.title ASC;
